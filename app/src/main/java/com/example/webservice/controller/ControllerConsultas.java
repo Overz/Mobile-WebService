@@ -14,7 +14,6 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -32,6 +31,7 @@ public class ControllerConsultas {
 
     public ControllerConsultas(ConsultasView activity) {
         this.activity = activity;
+        dao = new EstadoDAO(activity, EstadoVO.class);
     }
 
     /**
@@ -90,6 +90,7 @@ public class ControllerConsultas {
     }
 
     /**
+     * Consulta do banco o UF Selecionado, caso esteja vazio,
      * Envia uma requisição para a API e Retorna um Json
      *
      * @param uf String
@@ -97,34 +98,43 @@ public class ControllerConsultas {
     public void requestApi(String uf) {
         try {
             if (!uf.equals(ESCOLHA)) {
-                AsyncHttpClient client = new AsyncHttpClient();
-                String url = "https://covid19-brazil-api.now.sh/api/report/v1/brazil/uf/" + uf;
-                client.get(url, new AsyncHttpResponseHandler() {
 
-                    @Override
-                    public void onStart() {
-                        super.onStart();
-                        Toast.makeText(activity, "Aguarde...", Toast.LENGTH_SHORT).show();
-                        ControllerConsultas.this.configurarBotao(0);
-                    }
+//                estado = dao.consultarUf(uf);
 
-                    @Override
-                    public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                        ControllerConsultas.this.tratarJson(statusCode, headers, responseBody);
-                    }
+                if (estado == null) {
 
-                    @Override
-                    public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                        Toast.makeText(activity, "Falha na Requisição", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                    AsyncHttpClient client = new AsyncHttpClient();
+                    String url = "https://covid19-brazil-api.now.sh/api/report/v1/brazil/uf/" + uf;
+                    client.get(url, new AsyncHttpResponseHandler() {
+
+                        @Override
+                        public void onStart() {
+                            super.onStart();
+                            Toast.makeText(activity, "Aguarde...", Toast.LENGTH_SHORT).show();
+                            ControllerConsultas.this.configurarBotao(0);
+                        }
+
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                            ControllerConsultas.this.tratarJson(statusCode, headers, responseBody);
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                            Toast.makeText(activity, "Falha na Requisição", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
             } else {
                 Toast.makeText(activity, "Escolha um Estado!", Toast.LENGTH_SHORT).show();
             }
         } catch (Exception e) {
-            Log.i("<<COVID-API>>", "Erro ao Consumir API");
-            Log.i("<<EXCEPTION>>", Objects.requireNonNull(e.getMessage()));
             Toast.makeText(activity, "Erro ao Consumir a API!", Toast.LENGTH_SHORT).show();
+            Log.i("<<COVID-API>>", "Erro ao Consumir API");
+            System.out.println(e.getMessage() + "\n"
+                    + e.getCause() + "\n"
+                    + e.getClass().getSimpleName()
+            );
         }
     }
 
@@ -174,6 +184,7 @@ public class ControllerConsultas {
                 Toast.makeText(activity, "Item Já Registrado/Falhou", Toast.LENGTH_SHORT).show();
             }
         } catch (Exception e) {
+            Toast.makeText(activity, "Item Já Registrado/ou Falhou", Toast.LENGTH_SHORT).show();
             System.out.println(e.getMessage());
             System.out.println(e.getCause() + "\n");
             e.printStackTrace();

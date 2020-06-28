@@ -13,7 +13,7 @@ import java.sql.SQLException;
 
 public class MyORMLiteHelper extends OrmLiteSqliteOpenHelper {
     //Configuração do banco de dados
-    private static final String DATABASE_NAME = "webservice.sql";
+    private static final String DATABASE_NAME = "webservice.db";
     private static final int DATABASE_VERSION = 1;
 
     public MyORMLiteHelper(Context c) {

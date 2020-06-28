@@ -1,24 +1,21 @@
 package com.example.webservice.model.vo;
 
-import com.example.webservice.util.Constantes;
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.time.LocalDateTime;
-
-@DatabaseTable(tableName = "Estado")
+@DatabaseTable(tableName = "estado")
 public class EstadoVO {
 
-    @DatabaseField(generatedId = true, allowGeneratedIdInsert = true, dataType = DataType.INTEGER_OBJ)
+    @DatabaseField(generatedId = true, allowGeneratedIdInsert = true)
     private Integer id;
     @DatabaseField(columnName = "uId", canBeNull = false, dataType = DataType.INTEGER_OBJ)
     private Integer uId;
     @DatabaseField(columnName = "uf", canBeNull = false, dataType = DataType.STRING, width = 2)
     private String uf;
-    @DatabaseField(columnName = "nomeProduto", canBeNull = false, dataType = DataType.STRING, width = 50)
+    @DatabaseField(columnName = "nomeProduto", canBeNull = false, dataType = DataType.STRING)
     private String estado;
     @DatabaseField(columnName = "casosConfirmados", canBeNull = false, dataType = DataType.INTEGER_OBJ)
     private Integer casosConfirmados;
@@ -28,16 +25,16 @@ public class EstadoVO {
     private Integer suspeitos;
     @DatabaseField(columnName = "ignorados", canBeNull = false, dataType = DataType.INTEGER_OBJ)
     private Integer ignorados;
-    @DatabaseField(columnName = "data", canBeNull = false, dataType = DataType.DATE_STRING, width = 50)
-    private String data;
-    @DatabaseField(columnName = "favorito", canBeNull = false, dataType = DataType.INTEGER_OBJ)
+    @DatabaseField(columnName = "dataString", canBeNull = false, dataType = DataType.STRING)
+    private String dataString;
+    @DatabaseField(columnName = "favorito", dataType = DataType.INTEGER_OBJ)
     private Integer favorito;
 
     public EstadoVO() {
     }
 
     public EstadoVO(Integer uId, String uf, String estado, Integer casosConfirmados,
-                    Integer mortes, Integer suspeitos, Integer ignorados, String data) {
+                    Integer mortes, Integer suspeitos, Integer ignorados, String dataString) {
         this.uId = uId;
         this.uf = uf;
         this.estado = estado;
@@ -45,7 +42,7 @@ public class EstadoVO {
         this.mortes = mortes;
         this.suspeitos = suspeitos;
         this.ignorados = ignorados;
-        this.data = data;
+        this.dataString = dataString;
     }
 
     public Integer getId() {
@@ -112,12 +109,12 @@ public class EstadoVO {
         this.ignorados = ignorados;
     }
 
-    public String getData() {
-        return data;
+    public String getDataString() {
+        return dataString;
     }
 
-    public void setData(String data) {
-        this.data = data;
+    public void setDataString(String dataString) {
+        this.dataString = dataString;
     }
 
     public Integer getFavorito() {
@@ -132,11 +129,10 @@ public class EstadoVO {
     @Override
     public String toString() throws NullPointerException {
         try {
-            LocalDateTime data = LocalDateTime.parse(this.data.replace("Z", ""));
             return "UF: " + uf + " -  ESTADO: " + estado + "\n CASOS: " + casosConfirmados +
-                    " - MORTES: " + mortes + "\n SUSPEITOS: " + suspeitos + "\n DATA: " + data.format(Constantes.DTF);
+                    " - MORTES: " + mortes + "\n SUSPEITOS: " + suspeitos + "\n DATA: " + dataString;
         } catch (Exception e) {
-            throw new NullPointerException("Erro no TO_STRING de EstadoVO");
+            throw new NullPointerException("Erro no TO_STRING de EstadoVO: " + e.getMessage());
         }
     }
 }

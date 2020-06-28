@@ -2,6 +2,8 @@ package com.example.webservice.model.dto;
 
 import com.example.webservice.model.vo.EstadoVO;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.Serializable;
 
 public class EstadoDTO implements Serializable {
@@ -94,20 +96,29 @@ public class EstadoDTO implements Serializable {
     }
 
     public EstadoVO getEstadoVO() {
+        int a = datetime.lastIndexOf(".");
+        int b = datetime.length() - 1;
+        String c = datetime.substring(a, b);
+        datetime = datetime.replace("T", " ").replace("Z", "").replace(c, "");
         return new EstadoVO(uid, uf, state, cases, deaths, suspects, refuses, datetime);
     }
 
+    @NotNull
     @Override
-    public String toString() {
-        return "EstadoDTO{" +
-                "uid=" + uid +
-                ", uf='" + uf + '\'' +
-                ", state='" + state + '\'' +
-                ", cases=" + cases +
-                ", deaths=" + deaths +
-                ", suspects=" + suspects +
-                ", refuses=" + refuses +
-                ", datetime='" + datetime + '\'' +
-                '}';
+    public String toString() throws NullPointerException {
+        try {
+            return "EstadoDTO{" +
+                    "uid=" + uid +
+                    ", uf='" + uf + '\'' +
+                    ", state='" + state + '\'' +
+                    ", cases=" + cases +
+                    ", deaths=" + deaths +
+                    ", suspects=" + suspects +
+                    ", refuses=" + refuses +
+                    ", datetime='" + datetime + '\'' +
+                    '}';
+        } catch (Exception e) {
+            throw new NullPointerException("Erro no TO_STRING de EstadoDTO: " + e.getMessage());
+        }
     }
 }

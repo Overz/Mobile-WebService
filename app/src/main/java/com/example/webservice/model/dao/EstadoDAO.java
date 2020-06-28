@@ -12,6 +12,7 @@ import static com.example.webservice.util.Constantes.FAILD;
 import static com.example.webservice.util.Constantes.SUCCESS;
 
 public class EstadoDAO extends DaoHelper<EstadoVO> {
+
     public EstadoDAO(Context c, Class className) {
         super(c, className);
     }
@@ -20,7 +21,11 @@ public class EstadoDAO extends DaoHelper<EstadoVO> {
         try {
             return getDao().update(estado);
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage() + "\n"
+                    + e.getCause() + "\n"
+                    + e.getNextException() + "\n"
+                    + e.getClass().getSimpleName()
+            );
         }
         return FAILD;
     }
@@ -33,12 +38,16 @@ public class EstadoDAO extends DaoHelper<EstadoVO> {
 
     public int cadastrar(EstadoVO estado) {
         try {
-            Object o = getDao().createIfNotExists(estado);
-            if (o != null) {
+            Object e = getDao().createIfNotExists(estado);
+            if (e != null) {
                 return SUCCESS;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage() + "\n"
+                    + e.getCause() + "\n"
+                    + e.getNextException() + "\n"
+                    + e.getClass().getSimpleName()
+            );
         }
         return FAILD;
     }
@@ -47,7 +56,24 @@ public class EstadoDAO extends DaoHelper<EstadoVO> {
         try {
             return (ArrayList<EstadoVO>) getDao().queryBuilder().where().eq("favorito", "1").query();
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage() + "\n"
+                    + e.getCause() + "\n"
+                    + e.getNextException() + "\n"
+                    + e.getClass().getSimpleName()
+            );
+        }
+        return null;
+    }
+
+    public EstadoVO consultarUf(String uf) {
+        try {
+            return getDao().queryBuilder().where().eq("uf", uf).queryForFirst();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage() + "\n"
+                    + e.getCause() + "\n"
+                    + e.getNextException() + "\n"
+                    + e.getClass().getSimpleName()
+            );
         }
         return null;
     }
