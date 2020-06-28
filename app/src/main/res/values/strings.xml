@@ -20,4 +20,5 @@
     <string name="escolha">Escolha um Estado</string>
     <string name="wait">Aguardando...</string>
     <string name="semInfo">Sem Informação</string>
+    <string name="atualizar">Atualizar</string>
 </resources>

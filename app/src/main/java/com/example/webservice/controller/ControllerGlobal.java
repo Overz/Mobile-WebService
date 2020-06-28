@@ -2,9 +2,10 @@ package com.example.webservice.controller;
 
 import android.widget.Toast;
 
-import com.example.webservice.R;
-import com.example.webservice.model.vo.EstadoVO;
+import com.example.webservice.model.dto.GlobalDTO;
+import com.example.webservice.model.vo.GlobalVO;
 import com.example.webservice.view.GlobalView;
+import com.google.gson.Gson;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
@@ -15,7 +16,7 @@ import cz.msebera.android.httpclient.Header;
 public class ControllerGlobal {
 
     private GlobalView activity;
-    private List<EstadoVO> estados;
+    private List<GlobalDTO> dtoList;
 
     public ControllerGlobal(GlobalView activity) {
         this.activity = activity;
@@ -24,8 +25,7 @@ public class ControllerGlobal {
 
     public void consumirApi() {
         try {
-//            String url = "https://api.covid19api.com/summary";
-            String url = "https://covid19-brazil-api.now.sh/api/report/v1/brazil/uf/sp";
+            String url = "https://api.thevirustracker.com/free-api?global=stats";
             AsyncHttpClient client = new AsyncHttpClient();
             client.get(url, new AsyncHttpResponseHandler() {
                 @Override
@@ -36,6 +36,7 @@ public class ControllerGlobal {
 
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                    Toast.makeText(activity, "Aguarde...", Toast.LENGTH_SHORT).show();
                     ControllerGlobal.this.tratarJson(statusCode, headers, responseBody);
                 }
 
@@ -55,7 +56,12 @@ public class ControllerGlobal {
 
     private void tratarJson(int statusCode, Header[] headers, byte[] responseBody) {
         try {
-            //TODO
+            String s = new String(responseBody);
+            Gson g = new Gson();
+            GlobalDTO dto = g.fromJson(s, GlobalDTO.class);
+            GlobalDTO[] dtoList = g.fromJson(s, GlobalDTO[].class);
+            GlobalVO vo = dto.getGlobalVO();
+            this.preencherTela(vo);
         } catch (Exception e) {
             this.limparTela();
             System.out.println("Erro no método OnSuccess");
@@ -66,16 +72,16 @@ public class ControllerGlobal {
     }
 
     private void limparTela() {
-        activity.getTvCasos().setText(R.string.wait);
-        activity.getTvConfirmados().setText(R.string.wait);
-        activity.getTvMortes().setText(R.string.wait);
-        activity.getTvRecuperados().setText(R.string.wait);
-        Toast.makeText(activity, "Erro ao Consumir a API!", Toast.LENGTH_SHORT).show();
+        activity.getTvCasos().setText("");
+        activity.getTvConfirmados().setText("");
+        activity.getTvMortes().setText("");
+        activity.getTvRecuperados().setText("");
+        Toast.makeText(activity, "Limpando...", Toast.LENGTH_SHORT).show();
     }
 
-    private void preencherTela(EstadoVO e) {
-        activity.getTvCasos().setText(e.getCasosConfirmados());
-        activity.getTvMortes().setText(e.getMortes());
+    private void preencherTela(GlobalVO g) {
+        activity.getTvCasos().setText("");
+        activity.getTvMortes().setText("");
     }
 
     private void preencherErroTela() {

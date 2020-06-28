@@ -11,6 +11,7 @@ import com.example.webservice.controller.ControllerGlobal;
 public class GlobalView extends AppCompatActivity {
 
     private TextView tvCasos;
+    private TextView tvSuspeitos;
     private TextView tvConfirmados;
     private TextView tvMortes;
     private TextView tvRecuperados;
@@ -19,20 +20,24 @@ public class GlobalView extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_global_view);
-//        ControllerGlobal control;
-                new ControllerGlobal(this);
+        new ControllerGlobal(this);
         this.init();
     }
 
     private void init() {
-        this.tvCasos = findViewById(R.id.tvTotalCasosPersonal);
-        this.tvConfirmados = findViewById(R.id.tvTotalConfirmadosPersonal);
-        this.tvMortes = findViewById(R.id.tvTotalMortesPersonal);
-        this.tvRecuperados = findViewById(R.id.tvTotalRecuperadosPersonal);
+        this.tvCasos = findViewById(R.id.tvCasosGlobal);
+        this.tvSuspeitos = findViewById(R.id.tvSuspeitoGlobal);
+        this.tvConfirmados = findViewById(R.id.tvConfirmadosGlobal);
+        this.tvMortes = findViewById(R.id.tvMortesGlobal);
+        this.tvRecuperados = findViewById(R.id.tvRecuperadosGlobal);
     }
 
     public TextView getTvCasos() {
         return tvCasos;
+    }
+
+    public TextView getTvSuspeitos() {
+        return tvSuspeitos;
     }
 
     public TextView getTvConfirmados() {

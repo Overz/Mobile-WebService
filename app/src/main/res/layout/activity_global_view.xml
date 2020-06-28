@@ -34,7 +34,7 @@
                 android:textColor="@color/roxo" />
 
             <TextView
-                android:id="@+id/tvTotalCasosPersonal"
+                android:id="@+id/tvCasosGlobal"
                 style="@style/resultadoLabelGlobal"
                 android:textColor="@color/roxo" />
         </LinearLayout>
@@ -66,7 +66,7 @@
                 android:textColor="@color/lightBlue" />
 
             <TextView
-                android:id="@+id/tvTotalSuspeitosPersonal"
+                android:id="@+id/tvSuspeitoGlobal"
                 style="@style/resultadoLabelGlobal"
                 android:textColor="@color/lightBlue" />
         </LinearLayout>
@@ -98,7 +98,7 @@
                 android:textColor="@color/halfYellow" />
 
             <TextView
-                android:id="@+id/tvTotalConfirmadosPersonal"
+                android:id="@+id/tvConfirmadosGlobal"
                 style="@style/resultadoLabelGlobal"
                 android:textColor="@color/halfYellow" />
         </LinearLayout>
@@ -131,7 +131,7 @@
                 android:textColor="@color/lightRed" />
 
             <TextView
-                android:id="@+id/tvTotalMortesPersonal"
+                android:id="@+id/tvMortesGlobal"
                 style="@style/resultadoLabelGlobal"
                 android:textColor="@color/lightRed" />
         </LinearLayout>
@@ -164,7 +164,7 @@
                 android:textColor="@color/lightGreen" />
 
             <TextView
-                android:id="@+id/tvTotalRecuperadosPersonal"
+                android:id="@+id/tvRecuperadosGlobal"
                 style="@style/resultadoLabelGlobal"
                 android:textColor="@color/lightGreen" />
         </LinearLayout>

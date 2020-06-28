@@ -12,5 +12,7 @@ public class Constantes {
     public static final int FAILD = 0;
     public static final int FAVORITO = 1;
     public static final int NAO_FAVORITO = 0;
+    public static final int CONSULTAR = 1;
+    public static final int ATUALIZAR = 0;
 
 }

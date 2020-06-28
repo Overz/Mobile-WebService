@@ -5,13 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.webservice.R;
 import com.example.webservice.model.vo.EstadoVO;
-import com.example.webservice.model.vo.PaisVO;
 
 import java.util.List;
 
@@ -20,13 +18,11 @@ public class AdapterEstados extends BaseAdapter {
     private List<EstadoVO> estadosList;
     private LayoutInflater inflater;
     private Context context;
-    private LinearLayout layout;
 
-    public AdapterEstados(Context context, List<EstadoVO> list, LinearLayout layout) {
+    public AdapterEstados(Context context, List<EstadoVO> list) {
         this.estadosList = list;
         this.inflater = LayoutInflater.from(context);
         this.context = context;
-        this.layout = layout;
         this.notifyDataSetChanged();
     }
 
@@ -40,14 +36,16 @@ public class AdapterEstados extends BaseAdapter {
         notifyDataSetChanged();
     }
 
-    public void remover(PaisVO p) {
-        estadosList.remove(p);
+    public void remover(EstadoVO e) {
+        estadosList.remove(e);
         notifyDataSetChanged();
     }
 
     public void remover(int i) {
-        estadosList.remove(i);
-        notifyDataSetChanged();
+        if (estadosList.size() > 0) {
+            estadosList.remove(i);
+            notifyDataSetChanged();
+        }
     }
 
     @Override
@@ -112,10 +110,10 @@ public class AdapterEstados extends BaseAdapter {
     /**
      * Compara Strings da tela para mudar se for true
      *
-     * @param tvCasos TextView
-     * @param tvSuspeitos TextView
+     * @param tvCasos       TextView
+     * @param tvSuspeitos   TextView
      * @param tvConfirmados TextView
-     * @param tvMortes TextView
+     * @param tvMortes      TextView
      * @param tvRecuperados TextView
      */
     private void mudarStringLayout(TextView tvCasos, TextView tvSuspeitos, TextView tvConfirmados,

@@ -28,8 +28,16 @@
             android:id="@+id/btnConsultar"
             style="@style/btnConsultaView"
             android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
             android:background="@drawable/rounded_btn"
             android:text="@string/consultar" />
+
+        <Button
+            android:id="@+id/btnAtualizar"
+            style="@style/btnConsultaView"
+            android:layout_marginStart="5dp"
+            android:background="@drawable/rounded_btn"
+            android:text="@string/atualizar" />
 
     </LinearLayout>
 

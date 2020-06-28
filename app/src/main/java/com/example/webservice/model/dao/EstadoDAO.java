@@ -38,8 +38,8 @@ public class EstadoDAO extends DaoHelper<EstadoVO> {
 
     public int cadastrar(EstadoVO estado) {
         try {
-            Object e = getDao().createIfNotExists(estado);
-            if (e != null) {
+            Object o = getDao().createIfNotExists(estado);
+            if (o != null) {
                 return SUCCESS;
             }
         } catch (SQLException e) {
@@ -76,5 +76,14 @@ public class EstadoDAO extends DaoHelper<EstadoVO> {
             );
         }
         return null;
+    }
+
+    public int atualizar(EstadoVO estado) {
+        try {
+            return getDao().update(estado);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return FAILD;
     }
 }
