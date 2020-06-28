@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Web-Service</string>
+    <string name="introduction">API Corona-Virus</string>
+    <string name="todos">Consultar Todos</string>
+    <string name="pais">Consultar Pais</string>
+    <string name="estados">Consultar Estado</string>
+    <string name="global_info">Informações Globais</string>
+    <string name="consultar_algo">Consultar Outros</string>
+    <string name="sobre">Sobre</string>
+    <string name="mainToast">Erro ao Iniciar a Tela</string>
+
+    <string name="casos">Casos</string>
+    <string name="recuperados">Casos Recuperados</string>
+    <string name="suspeitos">Casos Suspeitos</string>
+    <string name="confirmados">Casos Confirmados</string>
+    <string name="mortes">Número de Mortes</string>
+
+    <string name="consultar">Consultar</string>
+    <string name="limparDados">Limpar Dados</string>
+    <string name="escolha">Escolha um Estado</string>
+    <string name="wait">Aguardando...</string>
+    <string name="semInfo">Sem Informação</string>
+</resources>

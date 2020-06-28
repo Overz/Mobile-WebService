@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/cinza"
+    android:orientation="vertical"
+    android:padding="10dp"
+    tools:context=".view.GlobalView">
+
+    <LinearLayout style="@style/linearLayoutGlobal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/casos"
+                android:src="@mipmap/grafico" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/miniLabelGlobal"
+                android:text="@string/casos"
+                android:textColor="@color/roxo" />
+
+            <TextView
+                android:id="@+id/tvTotalCasosPersonal"
+                style="@style/resultadoLabelGlobal"
+                android:textColor="@color/roxo" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout style="@style/linearLayoutGlobal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/suspeitos"
+                android:src="@mipmap/decision" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/miniLabelGlobal"
+                android:text="@string/suspeitos"
+                android:textColor="@color/lightBlue" />
+
+            <TextView
+                android:id="@+id/tvTotalSuspeitosPersonal"
+                style="@style/resultadoLabelGlobal"
+                android:textColor="@color/lightBlue" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout style="@style/linearLayoutGlobal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/confirmados"
+                android:src="@mipmap/febre" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/miniLabelGlobal"
+                android:text="@string/confirmados"
+                android:textColor="@color/halfYellow" />
+
+            <TextView
+                android:id="@+id/tvTotalConfirmadosPersonal"
+                style="@style/resultadoLabelGlobal"
+                android:textColor="@color/halfYellow" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout style="@style/linearLayoutGlobal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/mortes"
+                android:src="@mipmap/morte" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/miniLabelGlobal"
+                android:text="@string/mortes"
+                android:textAlignment="center"
+                android:textColor="@color/lightRed" />
+
+            <TextView
+                android:id="@+id/tvTotalMortesPersonal"
+                style="@style/resultadoLabelGlobal"
+                android:textColor="@color/lightRed" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout style="@style/linearLayoutGlobal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/recuperados"
+                android:src="@mipmap/saude" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/miniLabelGlobal"
+                android:text="@string/recuperados"
+                android:textAlignment="center"
+                android:textColor="@color/lightGreen" />
+
+            <TextView
+                android:id="@+id/tvTotalRecuperadosPersonal"
+                style="@style/resultadoLabelGlobal"
+                android:textColor="@color/lightGreen" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
