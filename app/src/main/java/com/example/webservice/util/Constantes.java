@@ -14,5 +14,6 @@ public class Constantes {
     public static final int NAO_FAVORITO = 0;
     public static final int CONSULTAR = 1;
     public static final int ATUALIZAR = 0;
+    public static int TIPO_TOSTRING = 0;
 
 }

@@ -13,6 +13,9 @@ import com.example.webservice.model.vo.EstadoVO;
 
 import java.util.List;
 
+import static com.example.webservice.util.Helpers.formatarValor;
+import static com.example.webservice.util.Helpers.mudarStringLayout;
+
 public class AdapterEstados extends BaseAdapter {
 
     private List<EstadoVO> estadosList;
@@ -94,45 +97,16 @@ public class AdapterEstados extends BaseAdapter {
             TextView tvMortes = view.findViewById(R.id.tvTotalMortesPersonal);
             TextView tvRecuperados = view.findViewById(R.id.tvTotalRecuperadosPersonal);
 
-            tvSuspeitos.setText(String.valueOf(e.getSuspeitos()));
-            tvConfirmados.setText(String.valueOf(e.getCasosConfirmados()));
-            tvMortes.setText(String.valueOf(e.getMortes()));
+            tvSuspeitos.setText(formatarValor(e.getSuspeitos()));
+            tvConfirmados.setText(formatarValor(e.getCasosConfirmados()));
+            tvMortes.setText(formatarValor(e.getMortes()));
 
-            this.mudarStringLayout(tvCasos, tvSuspeitos, tvConfirmados, tvMortes, tvRecuperados);
+            mudarStringLayout(context, tvCasos, tvSuspeitos, tvConfirmados, tvMortes, tvRecuperados);
         } catch (Exception ex) {
             Toast.makeText(context, "Erro ao Preencher os Campos", Toast.LENGTH_SHORT).show();
             System.out.println(ex.getMessage());
             System.out.println(ex.getCause() + "\n");
             ex.printStackTrace();
-        }
-    }
-
-    /**
-     * Compara Strings da tela para mudar se for true
-     *
-     * @param tvCasos       TextView
-     * @param tvSuspeitos   TextView
-     * @param tvConfirmados TextView
-     * @param tvMortes      TextView
-     * @param tvRecuperados TextView
-     */
-    private void mudarStringLayout(TextView tvCasos, TextView tvSuspeitos, TextView tvConfirmados,
-                                   TextView tvMortes, TextView tvRecuperados) {
-        String comparator = context.getResources().getString(R.string.wait);
-        if (tvCasos.getText().equals(comparator) || tvCasos.getText().equals("")) {
-            tvCasos.setText(R.string.semInfo);
-        }
-        if (tvSuspeitos.getText().equals(comparator) || tvSuspeitos.getText().equals("")) {
-            tvSuspeitos.setText(R.string.semInfo);
-        }
-        if (tvConfirmados.getText().equals(comparator) || tvConfirmados.getText().equals("")) {
-            tvConfirmados.setText(R.string.semInfo);
-        }
-        if (tvMortes.getText().equals(comparator) || tvMortes.getText().equals("")) {
-            tvMortes.setText(R.string.semInfo);
-        }
-        if (tvRecuperados.getText().equals(comparator) || tvRecuperados.getText().equals("")) {
-            tvRecuperados.setText(R.string.semInfo);
         }
     }
 }

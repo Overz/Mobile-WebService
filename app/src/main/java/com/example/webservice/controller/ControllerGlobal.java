@@ -2,21 +2,22 @@ package com.example.webservice.controller;
 
 import android.widget.Toast;
 
-import com.example.webservice.model.dto.GlobalDTO;
+import com.example.webservice.R;
+import com.example.webservice.model.dto.SummaryDTO;
 import com.example.webservice.model.vo.GlobalVO;
 import com.example.webservice.view.GlobalView;
 import com.google.gson.Gson;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
-import java.util.List;
-
 import cz.msebera.android.httpclient.Header;
+
+import static com.example.webservice.util.Helpers.formatarValor;
+import static com.example.webservice.util.Helpers.mudarStringLayout;
 
 public class ControllerGlobal {
 
     private GlobalView activity;
-    private List<GlobalDTO> dtoList;
 
     public ControllerGlobal(GlobalView activity) {
         this.activity = activity;
@@ -25,13 +26,13 @@ public class ControllerGlobal {
 
     public void consumirApi() {
         try {
-            String url = "https://api.thevirustracker.com/free-api?global=stats";
+            String url = "https://api.covid19api.com/summary";
             AsyncHttpClient client = new AsyncHttpClient();
             client.get(url, new AsyncHttpResponseHandler() {
                 @Override
                 public void onStart() {
                     super.onStart();
-                    Toast.makeText(activity, "Consumindo API...", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(activity, activity.getString(R.string.wait), Toast.LENGTH_SHORT).show();
                 }
 
                 @Override
@@ -46,6 +47,7 @@ public class ControllerGlobal {
                 }
 
             });
+
         } catch (Exception e) {
             System.out.println("Erro ao Consumir a API Global");
             System.out.println(e.getMessage());
@@ -58,13 +60,12 @@ public class ControllerGlobal {
         try {
             String s = new String(responseBody);
             Gson g = new Gson();
-            GlobalDTO dto = g.fromJson(s, GlobalDTO.class);
-            GlobalDTO[] dtoList = g.fromJson(s, GlobalDTO[].class);
-            GlobalVO vo = dto.getGlobalVO();
+            SummaryDTO dto = g.fromJson(s, SummaryDTO.class);
+            GlobalVO vo = new GlobalVO(dto.getGlobalDTO());
             this.preencherTela(vo);
         } catch (Exception e) {
-            this.limparTela();
-            System.out.println("Erro no método OnSuccess");
+            Toast.makeText(activity, "Erro ao Consumir a API!", Toast.LENGTH_SHORT).show();
+            System.out.println("Erro no método tratarJson: " + e.getClass().getSimpleName());
             System.out.println(e.getMessage());
             System.out.println(e.getCause() + "\n");
             e.printStackTrace();
@@ -79,12 +80,24 @@ public class ControllerGlobal {
         Toast.makeText(activity, "Limpando...", Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * Necessidade de dar parse em Inteiros para preencher na tela
+     * ou, utilizar um campo vazio, ex: ("" + valorInteiro);
+     *
+     * @param g GlobalVO
+     */
     private void preencherTela(GlobalVO g) {
-        activity.getTvCasos().setText("");
-        activity.getTvMortes().setText("");
+        try {
+            activity.getTvCasos().setText(formatarValor(g.getNovosConfirmados()));
+            activity.getTvConfirmados().setText(formatarValor(g.getTotalConfimados()));
+            activity.getTvMortes().setText(formatarValor(g.getTotalMortes()));
+            activity.getTvRecuperados().setText(formatarValor(g.getTotalRecuperados()));
+            mudarStringLayout(activity, activity.getTvCasos(), activity.getTvSuspeitos(), activity.getTvConfirmados(), activity.getTvMortes(), activity.getTvRecuperados());
+        } catch (Exception e) {
+            Toast.makeText(activity, "Erro ao Preencher os Dados!", Toast.LENGTH_LONG).show();
+            System.out.println(e.getMessage());
+            System.out.println(e.getCause() + "\n");
+            e.printStackTrace();
+        }
     }
-
-    private void preencherErroTela() {
-    }
-
 }

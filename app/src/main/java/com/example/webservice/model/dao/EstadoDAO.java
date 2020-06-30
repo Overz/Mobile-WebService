@@ -17,7 +17,20 @@ public class EstadoDAO extends DaoHelper<EstadoVO> {
         super(c, className);
     }
 
-    public int favoritar(EstadoVO estado) {
+    public ArrayList<EstadoVO> consultarFavoritos() {
+        try {
+            return (ArrayList<EstadoVO>) getDao().queryForEq("favorito", "1");
+        } catch (SQLException e) {
+            System.out.println(e.getMessage() + "\n"
+                    + e.getCause() + "\n"
+                    + e.getNextException() + "\n"
+                    + e.getClass().getSimpleName()
+            );
+        }
+        return null;
+    }
+
+    public int atualizarFavorito(EstadoVO estado) {
         try {
             return getDao().update(estado);
         } catch (SQLException e) {
@@ -28,12 +41,6 @@ public class EstadoDAO extends DaoHelper<EstadoVO> {
             );
         }
         return FAILD;
-    }
-
-
-    public int desfavoritar() {
-
-        return 0;
     }
 
     public int cadastrar(EstadoVO estado) {
@@ -50,19 +57,6 @@ public class EstadoDAO extends DaoHelper<EstadoVO> {
             );
         }
         return FAILD;
-    }
-
-    public ArrayList<EstadoVO> consultarFavoritos() {
-        try {
-            return (ArrayList<EstadoVO>) getDao().queryBuilder().where().eq("favorito", "1").query();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage() + "\n"
-                    + e.getCause() + "\n"
-                    + e.getNextException() + "\n"
-                    + e.getClass().getSimpleName()
-            );
-        }
-        return null;
     }
 
     public EstadoVO consultarUf(String uf) {

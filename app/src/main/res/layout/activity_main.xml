@@ -11,7 +11,16 @@
 
     <TextView
         style="@style/introduction"
+        android:layout_marginBottom="50dp"
+        android:clickable="false"
         android:text="@string/introduction" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:contentDescription="@string/covid019"
+        android:src="@mipmap/virus_foreground" />
 
     <Button
         android:id="@+id/btnGlobal"
@@ -27,5 +36,26 @@
         android:background="@drawable/rounded_btn"
         android:onClick="onClick"
         android:text="@string/consultar_algo" />
+
+    <Button
+        android:id="@+id/btnFavoritos"
+        style="@style/entryButton"
+        android:background="@drawable/rounded_btn"
+        android:onClick="onClick"
+        android:text="@string/favoritos" />
+
+    <Button
+        android:id="@+id/btnCadastrar"
+        style="@style/entryButton"
+        android:background="@drawable/rounded_btn"
+        android:onClick="onClick"
+        android:text="@string/cadastrar" />
+
+    <Button
+        android:id="@+id/btnSobre"
+        style="@style/entryButton"
+        android:background="@drawable/rounded_btn"
+        android:onClick="onClick"
+        android:text="@string/sobreApi" />
 
 </LinearLayout>

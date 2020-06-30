@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.webservice.R;
 import com.example.webservice.model.dao.EstadoDAO;
 import com.example.webservice.model.dto.EstadoDTO;
 import com.example.webservice.model.vo.EstadoVO;
@@ -97,6 +98,7 @@ public class ControllerConsultas {
         adapterEstados = new AdapterEstados(activity, array);
         activity.getLvResultado().setAdapter(adapterEstados);
         this.addClickCurto(estado.getUf());
+        this.addClickLongo(estado.getUf());
         this.configurarBotao(1);
         System.gc();
     }
@@ -125,6 +127,15 @@ public class ControllerConsultas {
     }
 
     /**
+     * Possibilita desfavoritar algum Item, dando update no Objeto no banco,
+     * e consultando todos os "favoritos", em um Static Array
+     *
+     * @param uf String
+     */
+    private void addClickLongo(String uf) {
+    }
+
+    /**
      * Insere uma Flag 'Favorito' ao Objeto, atualiza no Banco, e Atribui em um Array Constante
      *
      * @param uf String
@@ -132,7 +143,7 @@ public class ControllerConsultas {
     private void favoritar(String uf) {
         estado = dao.consultarUf(uf);
         estado.setFavorito(FAVORITO);
-        int i = dao.favoritar(estado);
+        int i = dao.atualizarFavorito(estado);
         if (i == SUCCESS) {
             Toast.makeText(activity, "Favoritado!", Toast.LENGTH_SHORT).show();
 
@@ -160,7 +171,7 @@ public class ControllerConsultas {
                 @Override
                 public void onStart() {
                     super.onStart();
-                    Toast.makeText(activity, "Aguarde...", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(activity, activity.getString(R.string.wait), Toast.LENGTH_SHORT).show();
                     ControllerConsultas.this.configurarBotao(0);
                 }
 

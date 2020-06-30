@@ -6,6 +6,8 @@ import com.j256.ormlite.table.DatabaseTable;
 
 import org.jetbrains.annotations.NotNull;
 
+import static com.example.webservice.util.Constantes.TIPO_TOSTRING;
+
 @DatabaseTable(tableName = "estado")
 public class EstadoVO {
 
@@ -15,7 +17,7 @@ public class EstadoVO {
     private Integer uId;
     @DatabaseField(columnName = "uf", unique = true, canBeNull = false, dataType = DataType.STRING, width = 2)
     private String uf;
-    @DatabaseField(columnName = "nomeProduto", canBeNull = false, dataType = DataType.STRING)
+    @DatabaseField(columnName = "nomeEstado", canBeNull = false, dataType = DataType.STRING)
     private String estado;
     @DatabaseField(columnName = "casosConfirmados", canBeNull = false, dataType = DataType.INTEGER_OBJ)
     private Integer casosConfirmados;
@@ -126,11 +128,22 @@ public class EstadoVO {
     }
 
     @NotNull
+    private String builderString() {
+        switch (TIPO_TOSTRING) {
+            case 0:
+                return "Estado: " + estado + " - Casos Confirmados: " + casosConfirmados;
+            case 1:
+                return "UF: " + uf + " -  ESTADO: " + estado + "\n CASOS: " + casosConfirmados +
+                        " - MORTES: " + mortes + "\n SUSPEITOS: " + suspeitos + "\n DATA: " + dataString;
+        }
+        return "";
+    }
+
+    @NotNull
     @Override
     public String toString() throws NullPointerException {
         try {
-            return "UF: " + uf + " -  ESTADO: " + estado + "\n CASOS: " + casosConfirmados +
-                    " - MORTES: " + mortes + "\n SUSPEITOS: " + suspeitos + "\n DATA: " + dataString;
+            return builderString();
         } catch (Exception e) {
             throw new NullPointerException("Erro no TO_STRING de EstadoVO: " + e.getMessage());
         }

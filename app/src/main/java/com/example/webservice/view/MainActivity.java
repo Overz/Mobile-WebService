@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    public void onClick(@NotNull View view) {
+    public void onClick(@NotNull View view) throws RuntimeException {
         try {
             Intent it;
             switch (view.getId()) {
@@ -31,13 +31,21 @@ public class MainActivity extends AppCompatActivity {
                     it = new Intent(this, ConsultasView.class);
                     startActivity(it);
                     break;
+                case R.id.btnFavoritos:
+                    it = new Intent(this, FavoritosView.class);
+                    startActivity(it);
+                    break;
+                case R.id.btnCadastrar:
+                    it = new Intent(this, CadastroView.class);
+                    startActivity(it);
+                    break;
                 default:
                     Toast.makeText(this, R.string.mainToast, Toast.LENGTH_SHORT).show();
                     break;
             }
             System.gc();
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException("Erro ao Tentar alguma Tela inicial: " + e.getMessage());
         }
     }
 }

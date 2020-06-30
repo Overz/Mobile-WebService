@@ -36,9 +36,9 @@ public class ConsultasView extends AppCompatActivity {
         ArrayAdapter<?> adapter = ArrayAdapter.createFromResource(
                 this,
                 R.array.arrayEstados,
-                R.layout.spinner_text
+                R.layout.layout_tv_white_text
         );
-        adapter.setDropDownViewResource(R.layout.spinner_dropdown);
+        adapter.setDropDownViewResource(R.layout.layout_spinner_dropdown);
         spnEstados.setAdapter(adapter);
     }
 

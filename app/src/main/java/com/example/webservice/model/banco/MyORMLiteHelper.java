@@ -23,7 +23,6 @@ public class MyORMLiteHelper extends OrmLiteSqliteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase, ConnectionSource connectionSource) {
         try {
-//            TableUtils.createTableIfNotExists(connectionSource, PaisVO.class);
             TableUtils.createTableIfNotExists(connectionSource, EstadoVO.class);
             Log.i("<<DATA_BASE>>", "MÉTODO CREATE");
         } catch (SQLException e) {
@@ -39,7 +38,6 @@ public class MyORMLiteHelper extends OrmLiteSqliteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, ConnectionSource connectionSource, int i, int i1) {
         try {
-//            TableUtils.dropTable(connectionSource, PaisVO.class, true);
             TableUtils.dropTable(connectionSource, EstadoVO.class, true);
             this.onCreate(sqLiteDatabase, connectionSource);
             Log.i("<<DATA_BASE>>", "MÉTODO UPGRADE");
@@ -52,5 +50,4 @@ public class MyORMLiteHelper extends OrmLiteSqliteOpenHelper {
             );
         }
     }
-
 }

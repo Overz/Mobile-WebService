@@ -6,6 +6,18 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
 
+/**
+ * Classe Utilizada para passar os métodos do JSON usando o GSON
+ * que converte os Json em um objeto da classe, tendo os atributos da classe, exatamente iguais ao do JSON.
+ * <p>
+ * Ao implpementar uma classe Json, precisa-se de uma Serialização, para que possa "Comunicar-se" com a classe,
+ * neste caso, usando "Implemente Serializable"
+ * <p>
+ * Também podendo ser utilizado as Annotations, neste caso, do GSON, podendo então, retirar o "Implements Serializable"
+ *
+ * @SerializableName("Name")
+ * @Expose
+ */
 public class EstadoDTO implements Serializable {
 
     private int uid;

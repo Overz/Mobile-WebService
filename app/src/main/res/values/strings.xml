@@ -9,16 +9,20 @@
     <string name="sobre">Sobre</string>
     <string name="mainToast">Erro ao Iniciar a Tela</string>
 
-    <string name="casos">Casos</string>
-    <string name="recuperados">Casos Recuperados</string>
-    <string name="suspeitos">Casos Suspeitos</string>
-    <string name="confirmados">Casos Confirmados</string>
-    <string name="mortes">Número de Mortes</string>
+    <string name="casos">Novos Casos</string>
+    <string name="recuperados">Total Recuperados</string>
+    <string name="suspeitos">Total Suspeitos</string>
+    <string name="confirmados">Total Confirmados</string>
+    <string name="mortes">Total de Mortes</string>
 
     <string name="consultar">Consultar</string>
     <string name="limparDados">Limpar Dados</string>
     <string name="escolha">Escolha um Estado</string>
-    <string name="wait">Aguardando...</string>
+    <string name="wait">Aguarde...</string>
     <string name="semInfo">Sem Informação</string>
     <string name="atualizar">Atualizar</string>
+    <string name="favoritos">Favoritos</string>
+    <string name="covid019">covid019</string>
+    <string name="cadastrar">Cadastrar</string>
+    <string name="sobreApi">Sobre(Api Info)</string>
 </resources>
