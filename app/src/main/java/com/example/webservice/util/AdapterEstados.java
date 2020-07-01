@@ -21,11 +21,13 @@ public class AdapterEstados extends BaseAdapter {
     private List<EstadoVO> estadosList;
     private LayoutInflater inflater;
     private Context context;
+    private int textViewAtivo;
 
-    public AdapterEstados(Context context, List<EstadoVO> list) {
+    public AdapterEstados(Context context, List<EstadoVO> list, int textViewAtivo) {
         this.estadosList = list;
         this.inflater = LayoutInflater.from(context);
         this.context = context;
+        this.textViewAtivo = textViewAtivo;
         this.notifyDataSetChanged();
     }
 
@@ -91,6 +93,13 @@ public class AdapterEstados extends BaseAdapter {
      */
     private void lvPersonal_2(View view, EstadoVO e) {
         try {
+
+            if (textViewAtivo == 1) {
+                TextView tvNomeUf = view.findViewById(R.id.tvNomeUF);
+                tvNomeUf.setText(String.valueOf(e.getEstado()));
+                tvNomeUf.setVisibility(View.VISIBLE);
+            }
+
             TextView tvCasos = view.findViewById(R.id.tvTotalCasosPersonal);
             TextView tvSuspeitos = view.findViewById(R.id.tvTotalSuspeitosPersonal);
             TextView tvConfirmados = view.findViewById(R.id.tvTotalConfirmadosPersonal);

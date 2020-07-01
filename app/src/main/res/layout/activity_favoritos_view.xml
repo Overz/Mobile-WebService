@@ -4,23 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/cinza"
-    android:orientation="vertical"
     android:padding="16dp"
     tools:context=".view.FavoritosView">
 
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Favoritos"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="30sp" />
-
     <ListView
-        android:id="@+id/lvFavoritos"
+        android:id="@+id/lvResultadoFavoritos"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="" />
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

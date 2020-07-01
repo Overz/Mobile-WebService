@@ -4,12 +4,10 @@ import android.content.Context;
 
 import com.example.webservice.model.banco.DaoHelper;
 import com.example.webservice.model.vo.EstadoVO;
+import com.j256.ormlite.dao.Dao;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-
-import static com.example.webservice.util.Constantes.FAILD;
-import static com.example.webservice.util.Constantes.SUCCESS;
 
 public class EstadoDAO extends DaoHelper<EstadoVO> {
 
@@ -17,9 +15,13 @@ public class EstadoDAO extends DaoHelper<EstadoVO> {
         super(c, className);
     }
 
-    public ArrayList<EstadoVO> consultarFavoritos() {
+    public Dao.CreateOrUpdateStatus atualizar(EstadoVO estado) {
         try {
-            return (ArrayList<EstadoVO>) getDao().queryForEq("favorito", "1");
+            EstadoVO oldEstado = getDao().queryBuilder().where().eq("uf", estado.getUf()).queryForFirst();
+            if (oldEstado != null) {
+                estado.setId(oldEstado.getId());
+            }
+            return getDao().createOrUpdate(estado);
         } catch (SQLException e) {
             System.out.println(e.getMessage() + "\n"
                     + e.getCause() + "\n"
@@ -28,40 +30,11 @@ public class EstadoDAO extends DaoHelper<EstadoVO> {
             );
         }
         return null;
-    }
-
-    public int atualizarFavorito(EstadoVO estado) {
-        try {
-            return getDao().update(estado);
-        } catch (SQLException e) {
-            System.out.println(e.getMessage() + "\n"
-                    + e.getCause() + "\n"
-                    + e.getNextException() + "\n"
-                    + e.getClass().getSimpleName()
-            );
-        }
-        return FAILD;
-    }
-
-    public int cadastrar(EstadoVO estado) {
-        try {
-            Object o = getDao().createIfNotExists(estado);
-            if (o != null) {
-                return SUCCESS;
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage() + "\n"
-                    + e.getCause() + "\n"
-                    + e.getNextException() + "\n"
-                    + e.getClass().getSimpleName()
-            );
-        }
-        return FAILD;
     }
 
     public EstadoVO consultarUf(String uf) {
         try {
-            return getDao().queryBuilder().where().eq("uf", uf).queryForFirst();
+            return getDao().queryBuilder().where().eq("uf", uf).and().eq("favorito", 1).queryForFirst();
         } catch (SQLException e) {
             System.out.println(e.getMessage() + "\n"
                     + e.getCause() + "\n"
@@ -72,12 +45,16 @@ public class EstadoDAO extends DaoHelper<EstadoVO> {
         return null;
     }
 
-    public int atualizar(EstadoVO estado) {
+    public ArrayList<EstadoVO> consultarFavoritos() {
         try {
-            return getDao().update(estado);
+            return (ArrayList<EstadoVO>) getDao().queryBuilder().where().eq("favorito", 1).query();
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage() + "\n"
+                    + e.getCause() + "\n"
+                    + e.getNextException() + "\n"
+                    + e.getClass().getSimpleName()
+            );
         }
-        return FAILD;
+        return null;
     }
 }

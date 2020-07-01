@@ -11,7 +11,7 @@ import static com.example.webservice.util.Constantes.TIPO_TOSTRING;
 @DatabaseTable(tableName = "estado")
 public class EstadoVO {
 
-    @DatabaseField(generatedId = true, allowGeneratedIdInsert = true, dataType = DataType.INTEGER_OBJ)
+    @DatabaseField(canBeNull = false, generatedId = true, allowGeneratedIdInsert = true, dataType = DataType.INTEGER_OBJ)
     private Integer id;
     @DatabaseField(columnName = "uId", dataType = DataType.INTEGER_OBJ)
     private Integer uId;
@@ -131,10 +131,10 @@ public class EstadoVO {
     private String builderString() {
         switch (TIPO_TOSTRING) {
             case 0:
-                return "Estado: " + estado + " - Casos Confirmados: " + casosConfirmados;
+                return "Estado: " + estado + "\n Casos Confirmados: " + casosConfirmados;
             case 1:
-                return "UF: " + uf + " -  ESTADO: " + estado + "\n CASOS: " + casosConfirmados +
-                        " - MORTES: " + mortes + "\n SUSPEITOS: " + suspeitos + "\n DATA: " + dataString;
+                return "UF: " + uf + "\nESTADO: " + estado + "\nCASOS: " + casosConfirmados +
+                        "\nMORTES: " + mortes + "\nSUSPEITOS: " + suspeitos + "\nDATA: " + dataString;
         }
         return "";
     }

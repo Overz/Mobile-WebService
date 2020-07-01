@@ -12,14 +12,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.webservice.R;
 import com.example.webservice.controller.ControllerConsultas;
 
-import static com.example.webservice.util.Constantes.ATUALIZAR;
-import static com.example.webservice.util.Constantes.CONSULTAR;
-
 public class ConsultasView extends AppCompatActivity {
 
     private ControllerConsultas control;
     private Spinner spnEstados; // Array de Estados
-    private Button btnConsultar, btnLimpar, btnAtualizar;
+    private Button btnConsultar, btnLimpar;
     private ListView lvResultado;
     private LinearLayout layout;
 
@@ -45,7 +42,6 @@ public class ConsultasView extends AppCompatActivity {
     private void init() {
         this.btnConsultar = findViewById(R.id.btnConsultar);
         this.btnLimpar = findViewById(R.id.btnLimpar);
-        this.btnAtualizar = findViewById(R.id.btnAtualizar);
         this.spnEstados = findViewById(R.id.spnEstados);
         this.lvResultado = findViewById(R.id.lvResultado);
         this.layout = findViewById(R.id.layoutPersonal2);
@@ -53,8 +49,7 @@ public class ConsultasView extends AppCompatActivity {
     }
 
     private void onClickListener() {
-        btnConsultar.setOnClickListener(v -> control.fazAlgoAction(CONSULTAR));
-        btnAtualizar.setOnClickListener(view -> control.fazAlgoAction(ATUALIZAR));
+        btnConsultar.setOnClickListener(v -> control.consultarAction());
         btnLimpar.setOnClickListener(v -> control.limparAction());
     }
 

@@ -7,7 +7,7 @@ import com.j256.ormlite.table.DatabaseTable;
 import org.jetbrains.annotations.NotNull;
 
 @DatabaseTable(tableName = "casosInseridos")
-public class NewCasos {
+public class RegistrarCasos {
 
     @DatabaseField(generatedId = true, allowGeneratedIdInsert = true, dataType = DataType.INTEGER_OBJ)
     private Integer id;
@@ -22,10 +22,10 @@ public class NewCasos {
     @DatabaseField(columnName = "recuperados", dataType = DataType.INTEGER_OBJ)
     private Integer recuperados;
 
-    public NewCasos() {
+    public RegistrarCasos() {
     }
 
-    public NewCasos(Integer id, Integer casos, Integer casosSuspeitos, Integer casosConfirmados, Integer mortes, Integer recuperados) {
+    public RegistrarCasos(Integer id, Integer casos, Integer casosSuspeitos, Integer casosConfirmados, Integer mortes, Integer recuperados) {
         this.id = id;
         this.casos = casos;
         this.casosSuspeitos = casosSuspeitos;
@@ -34,7 +34,7 @@ public class NewCasos {
         this.recuperados = recuperados;
     }
 
-    public NewCasos(Integer casos, Integer casosSuspeitos, Integer casosConfirmados, Integer mortes, Integer recuperados) {
+    public RegistrarCasos(Integer casos, Integer casosSuspeitos, Integer casosConfirmados, Integer mortes, Integer recuperados) {
         this.casos = casos;
         this.casosSuspeitos = casosSuspeitos;
         this.casosConfirmados = casosConfirmados;

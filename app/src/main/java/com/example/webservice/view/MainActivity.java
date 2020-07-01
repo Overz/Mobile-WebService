@@ -35,10 +35,6 @@ public class MainActivity extends AppCompatActivity {
                     it = new Intent(this, FavoritosView.class);
                     startActivity(it);
                     break;
-                case R.id.btnCadastrar:
-                    it = new Intent(this, CadastroView.class);
-                    startActivity(it);
-                    break;
                 default:
                     Toast.makeText(this, R.string.mainToast, Toast.LENGTH_SHORT).show();
                     break;

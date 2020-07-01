@@ -1,13 +1,11 @@
 <resources>
     <string name="app_name">Web-Service</string>
     <string name="introduction">API Corona-Virus</string>
-    <string name="todos">Consultar Todos</string>
-    <string name="pais">Consultar Pais</string>
-    <string name="estados">Consultar Estado</string>
     <string name="global_info">Informações Globais</string>
-    <string name="consultar_algo">Consultar Outros</string>
-    <string name="sobre">Sobre</string>
+    <string name="consultar_algo">Estados(BR)</string>
+    <string name="favoritos">Favoritos</string>
     <string name="mainToast">Erro ao Iniciar a Tela</string>
+
 
     <string name="casos">Novos Casos</string>
     <string name="recuperados">Total Recuperados</string>
@@ -20,9 +18,5 @@
     <string name="escolha">Escolha um Estado</string>
     <string name="wait">Aguarde...</string>
     <string name="semInfo">Sem Informação</string>
-    <string name="atualizar">Atualizar</string>
-    <string name="favoritos">Favoritos</string>
     <string name="covid019">covid019</string>
-    <string name="cadastrar">Cadastrar</string>
-    <string name="sobreApi">Sobre(Api Info)</string>
 </resources>

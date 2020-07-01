@@ -44,18 +44,4 @@
         android:onClick="onClick"
         android:text="@string/favoritos" />
 
-    <Button
-        android:id="@+id/btnCadastrar"
-        style="@style/entryButton"
-        android:background="@drawable/rounded_btn"
-        android:onClick="onClick"
-        android:text="@string/cadastrar" />
-
-    <Button
-        android:id="@+id/btnSobre"
-        style="@style/entryButton"
-        android:background="@drawable/rounded_btn"
-        android:onClick="onClick"
-        android:text="@string/sobreApi" />
-
 </LinearLayout>

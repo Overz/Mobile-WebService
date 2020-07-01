@@ -2,6 +2,7 @@ package com.example.webservice.controller;
 
 import android.app.AlertDialog;
 import android.util.Log;
+import android.widget.AdapterView;
 import android.widget.Toast;
 
 import com.example.webservice.R;
@@ -11,6 +12,7 @@ import com.example.webservice.model.vo.EstadoVO;
 import com.example.webservice.util.AdapterEstados;
 import com.example.webservice.view.ConsultasView;
 import com.google.gson.Gson;
+import com.j256.ormlite.dao.Dao;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
@@ -18,11 +20,10 @@ import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
 
-import static com.example.webservice.util.Constantes.ATUALIZAR;
-import static com.example.webservice.util.Constantes.CONSULTAR;
-import static com.example.webservice.util.Constantes.ESTADOS_FAVORITOS;
+import static com.example.webservice.util.Constantes.DESATIVADO;
 import static com.example.webservice.util.Constantes.FAVORITO;
-import static com.example.webservice.util.Constantes.SUCCESS;
+import static com.example.webservice.util.Constantes.NAO_FAVORITO;
+import static com.example.webservice.util.Constantes.TIPO_TOSTRING;
 
 public class ControllerConsultas {
 
@@ -38,45 +39,24 @@ public class ControllerConsultas {
     }
 
     /**
-     * OBS: Não tive nome para o método
-     * <p>
-     * <p>
      * Consulta:
-     * consultar no banco, se já existir, mostrar o resultado
-     * se estiver null, cadastrar no banco e Exibe na tela.
-     * <p>
-     * Atualizar:
-     * consultar o UF, e sobreescrever os resultados do UF no banco e Exibe na tela.
-     *
-     * @param tipo int
+     * consultar no banco, se já existir e se for favorito, mostrar o resultado.
+     * Se estiver null, cadastrar no banco e Exibe na tela.
      */
-    public void fazAlgoAction(int tipo) {
+    public void consultarAction() {
         try {
             this.estado = null;
             String uf = (String) activity.getSpnEstados().getSelectedItem();
+
             if (!uf.equals(ESCOLHA)) {
+                EstadoVO estado = dao.consultarUf(uf);
 
-                if (tipo == CONSULTAR) {
-                    this.estado = dao.consultarUf(uf); // Consulta o Objeto no Banco
-                    if (estado != null) {
-                        Toast.makeText(activity, "Aguarde...", Toast.LENGTH_SHORT).show();
-                        Toast.makeText(activity, "Item Já Registrado", Toast.LENGTH_SHORT).show();
-                        // Chama o ListView Caso já exista no Banco
-                        this.configListView(estado);
-                    } else {
-                        this.requestApi(uf, tipo); // Se não existir, consulta na API
-                    }
-                } else if (tipo == ATUALIZAR) {
-
-                    this.estado = null;
-                    Toast.makeText(activity, "UF: " + uf + "\nAtualizando Dados pela API", Toast.LENGTH_SHORT).show();
-                    this.requestApi(uf, tipo); // Consulta a API para preencher o Objeto
-
+                if (estado != null) {
+                    this.configListView(estado);
                 } else {
-                    Toast.makeText(activity, "Ops, Algúm Erro Ocorreu!", Toast.LENGTH_SHORT).show();
+                    this.requestApi(uf); // Consulta a API para preencher o Objeto
                 }
             } else {
-                estado = null;
                 Toast.makeText(activity, "Escolha um Estado!", Toast.LENGTH_SHORT).show();
             }
         } catch (Exception e) {
@@ -93,32 +73,35 @@ public class ControllerConsultas {
      * @param estado EstadoVO
      */
     private void configListView(EstadoVO estado) {
+        Toast.makeText(activity, "Consultado!", Toast.LENGTH_LONG).show();
         ArrayList<EstadoVO> array = new ArrayList<>();
         array.add(estado);
-        adapterEstados = new AdapterEstados(activity, array);
+        adapterEstados = new AdapterEstados(activity, array, DESATIVADO);
         activity.getLvResultado().setAdapter(adapterEstados);
-        this.addClickCurto(estado.getUf());
-        this.addClickLongo(estado.getUf());
+        this.addClickCurto();
+        this.addClickLongo();
         this.configurarBotao(1);
+        TIPO_TOSTRING = 0;
         System.gc();
     }
 
     /**
-     * Possibilita Favoritar algum Item, dando update no Objeto no banco,
-     * e consultando todos os "favoritos", em um Static Array
-     *
-     * @param uf String
+     * Possibilita Favoritar algum Item, dando update no Objeto no banco.
      */
-    private void addClickCurto(String uf) {
+    private void addClickCurto() {
         activity.getLvResultado().setOnItemClickListener((adapterView, view, i, l) -> {
             this.estado = adapterEstados.getItem(i);
             if (estado != null) {
                 AlertDialog.Builder alerta = new AlertDialog.Builder(activity);
-                alerta.setTitle("Favoritar?");
+                alerta.setTitle("Deseja Favoritar esse Item?");
+                TIPO_TOSTRING = 1;
                 alerta.setMessage(estado.toString());
                 alerta.setIcon(android.R.drawable.star_on);
-                alerta.setNegativeButton("Fechar", (dialogInterface, i1) -> estado = null);
-                alerta.setPositiveButton("Favoritar", (dialogInterface, i1) -> this.favoritar(uf));
+                alerta.setNegativeButton("Fechar", (dialogInterface, i1) -> this.estado = null);
+                alerta.setPositiveButton("Ok", (dialogInterface, i1) -> {
+                    estado.setFavorito(FAVORITO);
+                    this.updateEstado(estado);
+                });
                 alerta.show();
             } else {
                 Toast.makeText(activity, "Erro ao Tentar Favoritar!", Toast.LENGTH_SHORT).show();
@@ -127,43 +110,37 @@ public class ControllerConsultas {
     }
 
     /**
-     * Possibilita desfavoritar algum Item, dando update no Objeto no banco,
-     * e consultando todos os "favoritos", em um Static Array
-     *
-     * @param uf String
+     * Possibilita desfavoritar algum Item, dando update no Objeto no banco.
      */
-    private void addClickLongo(String uf) {
-    }
-
-    /**
-     * Insere uma Flag 'Favorito' ao Objeto, atualiza no Banco, e Atribui em um Array Constante
-     *
-     * @param uf String
-     */
-    private void favoritar(String uf) {
-        estado = dao.consultarUf(uf);
-        estado.setFavorito(FAVORITO);
-        int i = dao.atualizarFavorito(estado);
-        if (i == SUCCESS) {
-            Toast.makeText(activity, "Favoritado!", Toast.LENGTH_SHORT).show();
-
-            ArrayList<EstadoVO> daoReturn = dao.consultarFavoritos();
-            if (daoReturn != null) {
-                ESTADOS_FAVORITOS = daoReturn;
+    private void addClickLongo() {
+        activity.getLvResultado().setOnItemLongClickListener((AdapterView.OnItemLongClickListener) (adapterView, view, i, l) -> {
+            estado = adapterEstados.getItem(i);
+            if (estado != null) {
+                AlertDialog.Builder alerta = new AlertDialog.Builder(activity);
+                alerta.setTitle("Remover dos Favoritos?");
+                TIPO_TOSTRING = 1;
+                alerta.setMessage(estado.toString());
+                alerta.setIcon(android.R.drawable.star_on);
+                alerta.setNegativeButton("Fechar", (dialogInterface, i1) -> estado = null);
+                alerta.setPositiveButton("Ok", (dialogInterface, i1) -> {
+                    estado.setFavorito(NAO_FAVORITO);
+                    updateEstado(estado);
+                });
+                alerta.show();
+            } else {
+                Toast.makeText(activity, "Erro ao Tentar Favoritar!", Toast.LENGTH_SHORT).show();
             }
-
-        } else {
-            Toast.makeText(activity, "Erro ao Tentar Favoritar", Toast.LENGTH_SHORT).show();
-        }
+            return true;
+        });
     }
 
     /**
      * Envia uma requisição a API, retornando um JSON.
-     * Tratando o JSON para a classe DTO e verifica se uma consulta/cadastro, ou uma atualização dos Dados no Banco.
+     * Tratando o JSON para a classe DTO e verifica se uma consulta, ou uma atualização dos Dados no Banco.
      *
      * @param uf String
      */
-    private void requestApi(String uf, int tipo) {
+    private void requestApi(String uf) {
         try {
             AsyncHttpClient client = new AsyncHttpClient();
             String url = "https://covid19-brazil-api.now.sh/api/report/v1/brazil/uf/" + uf;
@@ -177,22 +154,7 @@ public class ControllerConsultas {
 
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                    String res = new String(responseBody);
-                    Gson g = new Gson();
-                    EstadoDTO dto = g.fromJson(res, EstadoDTO.class);
-                    Log.i("TO_STRING", dto.toString());
-                    estado = dto.getEstadoVO();
-
-                    if (tipo == CONSULTAR) {
-                        cadastrarAction();
-                    } else {
-                        Toast.makeText(activity, "Atualizando Dados...", Toast.LENGTH_SHORT).show();
-                        EstadoVO oldEstado = dao.consultarUf(uf);
-                        atualizarAction(oldEstado.getId());
-                    }
-
-                    configListView(estado);
-
+                    ControllerConsultas.this.tratarJson(statusCode, headers, responseBody);
                 }
 
                 @Override
@@ -212,43 +174,40 @@ public class ControllerConsultas {
     }
 
     /**
-     * Cadastra, mostra uma Mensagem de Sucesso
-     * Se nao Cadastrar, de Erro.
-     */
-    private void cadastrarAction() {
-        try {
-            int i = dao.cadastrar(estado);
-            if (i == SUCCESS) {
-                Toast.makeText(activity, "Item Registrado", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(activity, "Item Falhou ao Registrar", Toast.LENGTH_SHORT).show();
-            }
-        } catch (Exception e) {
-            Toast.makeText(activity, "Item Já Registrado/ou Falhou", Toast.LENGTH_SHORT).show();
-            System.out.println(e.getMessage());
-            System.out.println(e.getCause() + "\n");
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Atualiza os dados no Banco com o da API
-     * Se atualizar, mostra uma mensagem de sucesso,
-     * se não, de erro
+     * Método Auxiliar para a Requisição da API
+     * Trata o Objeto e configura o ListView
      *
-     * @param id Integer
+     * @param statusCode   int
+     * @param headers      Header[]
+     * @param responseBody byte[]
      */
-    private void atualizarAction(Integer id) {
+    private void tratarJson(int statusCode, Header[] headers, byte[] responseBody) {
+        String res = new String(responseBody);
+        Gson g = new Gson();
+        EstadoDTO dto = g.fromJson(res, EstadoDTO.class);
+        Log.i("TO_STRING", dto.toString());
+        estado = dto.getEstadoVO();
+        this.configListView(estado);
+    }
+
+    /**
+     * Cadastra/Atualiza mostrando uma Mensagem de Sucesso.
+     * Se nao, de Erro.
+     *
+     * @param estado EstadoVO
+     */
+    private void updateEstado(EstadoVO estado) {
         try {
-            estado.setId(id);
-            int i = dao.atualizar(estado);
-            if (i == SUCCESS) {
-                Thread.sleep(1000);
-                Toast.makeText(activity, "Dados Atualizados!\n UF: " + estado.getUf() + " - Estado: " + estado.getEstado(), Toast.LENGTH_SHORT).show();
+            Dao.CreateOrUpdateStatus status = dao.atualizar(estado);
+            if (status.isCreated()) {
+                Toast.makeText(activity, "Item Cadastrado!", Toast.LENGTH_SHORT).show();
+            } else if (status.isUpdated()) {
+                Toast.makeText(activity, "Item Atualizado", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(activity, "Erro ao Atualizar/Nada Ao Alterar", Toast.LENGTH_SHORT).show();
+                Toast.makeText(activity, "Erro ao Atualizar o Item!", Toast.LENGTH_LONG).show();
             }
         } catch (Exception e) {
+            Toast.makeText(activity, "Erro ao atualizar o estado!!!", Toast.LENGTH_SHORT).show();
             System.out.println(e.getMessage());
             System.out.println(e.getCause() + "\n");
             e.printStackTrace();
@@ -256,7 +215,7 @@ public class ControllerConsultas {
     }
 
     /**
-     * Limpa o Adapter e a List na classe Adapter
+     * Limpa o Adapter e o List na classe Adapter
      */
     public void limparAction() {
         try {

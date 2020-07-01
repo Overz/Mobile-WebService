@@ -11,8 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.CadastroView"></activity>
-        <activity android:name=".view.FavoritosView" />
+        <activity android:name=".view.FavoritosView"></activity>
         <activity android:name=".view.ConsultasView" />
         <activity android:name=".view.GlobalView" />
         <activity android:name=".view.MainActivity">
