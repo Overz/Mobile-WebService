@@ -20,8 +20,8 @@ public class GlobalView extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_global_view);
-        new ControllerGlobal(this);
         this.init();
+        new ControllerGlobal(this);
     }
 
     private void init() {

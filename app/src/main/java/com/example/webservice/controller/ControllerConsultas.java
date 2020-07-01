@@ -3,6 +3,7 @@ package com.example.webservice.controller;
 import android.app.AlertDialog;
 import android.util.Log;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.example.webservice.R;
@@ -35,7 +36,18 @@ public class ControllerConsultas {
 
     public ControllerConsultas(ConsultasView activity) {
         this.activity = activity;
-        dao = new EstadoDAO(activity, EstadoVO.class);
+        this.dao = new EstadoDAO(activity, EstadoVO.class);
+        this.configSpinner();
+    }
+
+    private void configSpinner() {
+        ArrayAdapter<?> adapter = ArrayAdapter.createFromResource(
+                activity,
+                R.array.arrayEstados,
+                R.layout.layout_tv_white_text
+        );
+        adapter.setDropDownViewResource(R.layout.layout_spinner_dropdown);
+        activity.getSpnEstados().setAdapter(adapter);
     }
 
     /**
@@ -82,7 +94,6 @@ public class ControllerConsultas {
         this.addClickLongo();
         this.configurarBotao(1);
         TIPO_TOSTRING = 0;
-        System.gc();
     }
 
     /**

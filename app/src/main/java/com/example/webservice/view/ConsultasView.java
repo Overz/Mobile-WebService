@@ -1,7 +1,6 @@
 package com.example.webservice.view;
 
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -24,19 +23,8 @@ public class ConsultasView extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_consultas_view);
-        control = new ControllerConsultas(this);
         this.init();
-        this.configSpinner();
-    }
-
-    private void configSpinner() {
-        ArrayAdapter<?> adapter = ArrayAdapter.createFromResource(
-                this,
-                R.array.arrayEstados,
-                R.layout.layout_tv_white_text
-        );
-        adapter.setDropDownViewResource(R.layout.layout_spinner_dropdown);
-        spnEstados.setAdapter(adapter);
+        control = new ControllerConsultas(this);
     }
 
     private void init() {
