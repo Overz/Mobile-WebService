@@ -21,10 +21,10 @@ public class ControllerGlobal {
 
     public ControllerGlobal(GlobalView activity) {
         this.activity = activity;
-        this.consumirApi();
+        this.requestApi();
     }
 
-    public void consumirApi() {
+    public void requestApi() {
         try {
             String url = "https://api.covid19api.com/summary";
             AsyncHttpClient client = new AsyncHttpClient();
