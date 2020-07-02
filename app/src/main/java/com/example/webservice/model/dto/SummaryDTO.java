@@ -43,7 +43,6 @@ public class SummaryDTO {
     }
 
     public GlobalDTO getGlobalDTO() {
-//        new GlobalVO(Global.getTotalRecovered(), Global.getNewRecovered(), Global.getTotalDeaths(), Global.getNewDeaths(), Global.getTotalConfirmed(), Global.getNewConfirmed());
         return new GlobalDTO(Global.getTotalRecovered(), Global.getNewRecovered(), Global.getTotalDeaths(), Global.getNewDeaths(), Global.getTotalConfirmed(), Global.getNewConfirmed());
     }
 

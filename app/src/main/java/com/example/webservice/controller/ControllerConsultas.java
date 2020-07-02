@@ -21,7 +21,6 @@ import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
 
-import static com.example.webservice.util.Constantes.DESATIVADO;
 import static com.example.webservice.util.Constantes.FAVORITO;
 import static com.example.webservice.util.Constantes.NAO_FAVORITO;
 import static com.example.webservice.util.Constantes.TIPO_TOSTRING;
@@ -88,7 +87,7 @@ public class ControllerConsultas {
         Toast.makeText(activity, "Consultado!", Toast.LENGTH_LONG).show();
         ArrayList<EstadoVO> array = new ArrayList<>();
         array.add(estado);
-        adapterEstados = new AdapterEstados(activity, array, DESATIVADO);
+        adapterEstados = new AdapterEstados(activity, array);
         activity.getLvResultado().setAdapter(adapterEstados);
         this.addClickCurto();
         this.addClickLongo();

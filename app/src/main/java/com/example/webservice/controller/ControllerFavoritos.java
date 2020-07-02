@@ -44,6 +44,9 @@ public class ControllerFavoritos {
         this.configClickCurto();
     }
 
+    /**
+     * Configura o Click Curto para remover de favoritos o item selecionado.
+     */
     private void configClickCurto() {
         try {
             activity.getLvResultado().setOnItemClickListener((AdapterView.OnItemClickListener) (adapterView, view, i, l) -> {
